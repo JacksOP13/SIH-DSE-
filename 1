@@ -1,0 +1,21 @@
+# Import necessary libraries
+from transformers import MarianTokenizer, MarianMTModel
+
+# Load the pre-trained English to Hindi translation model
+model_name = "Helsinki-NLP/opus-mt-en-hi"
+tokenizer = MarianTokenizer.from_pretrained(model_name)
+model = MarianMTModel.from_pretrained(model_name)
+
+# Define the English text you want to translate
+
+english_text = input("Enter your text :")
+
+# Tokenize and translate the English text to Hindi
+inputs = tokenizer(english_text, return_tensors="pt")
+translated_ids = model.generate(inputs["input_ids"])
+
+# Decode the translated text from token IDs to text
+translated_text = tokenizer.decode(translated_ids[0], skip_special_tokens=True)
+
+# Print the translated text
+print("Translated Text (Hindi):", translated_text)
